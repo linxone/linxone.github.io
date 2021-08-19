@@ -1,0 +1,208 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>OVS-Setup | 有诗三百首</title><meta name="author" content="Linx"><meta name="copyright" content="Linx"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="参考文档OVS官方文档 Ovs Document 一、 OVS安装1.1 Obtaining Open vSwitch Sources1$ git clone https:&#x2F;&#x2F;github.com&#x2F;openvswitch&#x2F;ovs.git  1.2 Bootstrapping (非 git 获取下来源码，略过)在ovs根目录下 1$ .&#x2F;boot.sh  1.3 Configuring在ovs根目录">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OVS-Setup">
+<meta property="og:url" content="http://example.com/2021/04/21/OVS-Setup/index.html">
+<meta property="og:site_name" content="有诗三百首">
+<meta property="og:description" content="参考文档OVS官方文档 Ovs Document 一、 OVS安装1.1 Obtaining Open vSwitch Sources1$ git clone https:&#x2F;&#x2F;github.com&#x2F;openvswitch&#x2F;ovs.git  1.2 Bootstrapping (非 git 获取下来源码，略过)在ovs根目录下 1$ .&#x2F;boot.sh  1.3 Configuring在ovs根目录">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2021-04-21T06:01:37.000Z">
+<meta property="article:modified_time" content="2021-08-17T08:11:57.874Z">
+<meta property="article:author" content="Linx">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2021/04/21/OVS-Setup/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"We didn't find any results for the search: ${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-08-17 16:11:57'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="有诗三百首" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="/null" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">3</div></a></div></div></div><hr/></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">有诗三百首</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> Search</span></a></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">OVS-Setup</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-04-21T06:01:37.000Z" title="Created 2021-04-21 14:01:37">2021-04-21</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2021-08-17T08:11:57.874Z" title="Updated 2021-08-17 16:11:57">2021-08-17</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><p>OVS官方文档 <a target="_blank" rel="noopener" href="https://docs.openvswitch.org/en/latest/intro/install/general/#general-build-reqs">Ovs Document</a></p>
+<h2 id="一、-OVS安装"><a href="#一、-OVS安装" class="headerlink" title="一、 OVS安装"></a>一、 OVS安装</h2><h3 id="1-1-Obtaining-Open-vSwitch-Sources"><a href="#1-1-Obtaining-Open-vSwitch-Sources" class="headerlink" title="1.1 Obtaining Open vSwitch Sources"></a>1.1 Obtaining Open vSwitch Sources</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git <span class="built_in">clone</span> https://github.com/openvswitch/ovs.git</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="1-2-Bootstrapping-非-git-获取下来源码，略过"><a href="#1-2-Bootstrapping-非-git-获取下来源码，略过" class="headerlink" title="1.2 Bootstrapping (非 git 获取下来源码，略过)"></a>1.2 Bootstrapping (非 git 获取下来源码，略过)</h3><p>在ovs根目录下</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ./boot.sh</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="1-3-Configuring"><a href="#1-3-Configuring" class="headerlink" title="1.3 Configuring"></a>1.3 Configuring</h3><p>在ovs根目录下</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ./configure</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="1-4-Building"><a href="#1-4-Building" class="headerlink" title="1.4 Building"></a>1.4 Building</h3><p>在ovs根目录下</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> make</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> make install</span></span><br></pre></td></tr></table></figure>
+
+<p>若是需要构建的内核模块,执行以下命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> make modules_install</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="1-5-ovs工具脚本导入"><a href="#1-5-ovs工具脚本导入" class="headerlink" title="1.5 ovs工具脚本导入"></a>1.5 ovs工具脚本导入</h3><p>ovs提供一套实用工具ovs-ctl utility，供用户使用，其默认存放路径在‘/usr/local/share/openvswitch/scripts’，将其导入环境PATH；</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:/usr/<span class="built_in">local</span>/share/openvswitch/scripts</span></span><br></pre></td></tr></table></figure>
+
+<p>这里推荐直接将路径添加到sudoers 或者 每次使用ovs切换root用户；</p>
+<h3 id="1-6-ovs启动"><a href="#1-6-ovs启动" class="headerlink" title="1.6 ovs启动"></a>1.6 ovs启动</h3><p>ovs-ctl提供启动和停止 ovsdb-server 和 ovs-vswitchd ；若需要个性化启动方式，见参考文档。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo ovs-ctl start</span></span><br></pre></td></tr></table></figure>
+
+<p>可使用<code>ps -e | grep ovs</code>查看验证ovs是否启动成功；若ovs成功运行，可以看到 ovs-vswitchd 和 ovsdb-server。<br>注意！ovs-vswitchd是ovs很重要模块，若未启动，后续增删网桥或者端口会出现问题。</p>
+<h2 id="二、-KVM-虚拟机安装"><a href="#二、-KVM-虚拟机安装" class="headerlink" title="二、 KVM 虚拟机安装"></a>二、 KVM 虚拟机安装</h2><h3 id="2-1-前提条件"><a href="#2-1-前提条件" class="headerlink" title="2.1 前提条件"></a>2.1 前提条件</h3><p>在安装之前，确保主机支持 KVM 虚拟化，并且系统必须拥有支持VT-x(vmx) 的 Intel 处理器或者支持 AMD-V(svm) 技术的 AMD 处理器。输入下面的grep命令来看看你的吹气是否支持硬件虚拟化：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> grep -Eoc <span class="string">&#x27;(vmx|svm)&#x27;</span> /proc/cpuinfo</span></span><br></pre></td></tr></table></figure>
+
+<p>如果 CPU 支持硬件虚拟化，这个命令将会打印出大于0的数字，这代表 CPU 核心数目。否则，如果输出为0，它意味着这个 CPU 不支持硬件虚拟化。</p>
+<h3 id="2-2-安装-KVM"><a href="#2-2-安装-KVM" class="headerlink" title="2.2 安装 KVM"></a>2.2 安装 KVM</h3><p>运行下面的命令安装 KVM，和额外的虚拟化管理软件包：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo apt install qemu-kvm libvirt-bin bridge-utils virtinst virt-manager</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>qemu-kvm - 为 KVM 管理程序提供硬件模拟的软件程序</li>
+<li>libvirt-bin - 管理虚拟化平台的软件</li>
+<li>bridge-utils - 用来配置网络桥接的命令行工具</li>
+<li>virtinst - 用来创建虚拟机的命令行工具</li>
+<li>virt-manager - 提供一个易用的图形界面，并且通过libvirt 支持用于管理虚拟机的命令行工具</li>
+</ul>
+<p>一旦软件包被安装好，libvirt 守护程序将会自动启动。你可以通过运行下面的命令，验证它：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo systemctl is-active libvirtd</span></span><br></pre></td></tr></table></figure>
+
+<p>输出：active</p>
+<p>接下来就可以根据个人的需求，使用 virt-manager 图形界面安装虚拟机即可。</p>
+<h2 id="三、-拓扑搭建"><a href="#三、-拓扑搭建" class="headerlink" title="三、 拓扑搭建"></a>三、 拓扑搭建</h2><p>首先，这里厘清一个基本概念问题。<br>OvS添加的虚拟 bridge 和 port 是什么？</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo ovs-vsctl add-br br0     // 创建一个叫br0的网桥</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo ovs-vsctl add-port br0 vp  -- <span class="built_in">set</span> Interface vp <span class="built_in">type</span>=internal  // 创建一个 internal类型的虚拟端口 vp，默认类型即是 internal</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>br0：<ul>
+<li>对于OvS和宿主主机所创建的VMs看来是创建了一个虚拟的交换机：(VM在网络配置NIC中选择 br0，相当于将 VM 和 br0 连接起来，这样相当于 VM 使用默认类型internal端口)</li>
+<li>而对于OvS宿主主机而言，br0是一个虚拟网卡；(需要注意的是，若用ifconfig可以看到一个叫 virbr0 虚拟网卡，这个virbr0并不是OvS创建的br0，而是安装KVM默认自带的虚拟网卡。OvS创建的br0默认是不显示，若配上ip地址，便可以用ifconfig命令看到br0)</li>
+</ul>
+</li>
+<li>vp：对于OvS看来就是交换机br0上的的一个端口/接口，而对于OvS宿主主机和宿主主机所创建的vm而言，vp都是一个虚拟网卡；</li>
+</ul>
+<p>这里举例一个拓扑图配置方案，OvS配置命令如下，以HOST1为例(HOST2类似操作):</p>
+<img src="/2021/04/21/OVS-Setup/single-Eth.png" alt="single-Eth" style="zoom:33%;">
+
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo ovs-vsctl add-br br0     // 创建一个叫br0的网桥</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo ovs-vsctl add-port br0 phy-eth    // 将宿主主机物理网卡 phy-eth 绑定到网桥 br0 上，并且要与物理网卡同名，注意的是OvS不能绑定宿主主机虚拟网</span></span><br></pre></td></tr></table></figure>
+
+<p>接下来，给已经创建KVM虚拟机配置IP，并确定所有虚拟机VMs网卡配置NIC都以 Bridge 方式绑定到 br0。这里是将 VM1 VM2 VM3 VM4划分在同一个子网内。IPv4地址分别是 10.0.0.11 10.0.0.12 10.0.0.13 10.0.0.14，Netmask都是 255.255.255.0 。<br>HOST2同上类似操作；</p>
+<img src="/2021/04/21/OVS-Setup/multi-Eths.png" alt="multi-Eths" style="zoom:33%;">
+
+<p>这里也可以为每个 VM 在 OvS 上配置一个单独端口</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo ovs-vsctl add-port br0 virt-port1 -- <span class="built_in">set</span> Interface virt-port1 <span class="built_in">type</span>=internal// HOST1上创建一个叫 virt-port1 的虚拟端口</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo ovs-vsctl add-port br0 virt-port2 -- <span class="built_in">set</span> Interface virt-port2 <span class="built_in">type</span>=internal// HOST1上创建一个叫 virt-port2 的虚拟端口</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo ovs-vsctl add-port br0 virt-port3 -- <span class="built_in">set</span> Interface virt-port3 <span class="built_in">type</span>=internal// HOST2上创建一个叫 virt-port3 的虚拟端口</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo ovs-vsctl add-port br0 virt-port4 -- <span class="built_in">set</span> Interface virt-port4 <span class="built_in">type</span>=internal// HOST2上创建一个叫 virt-port4 的虚拟端口</span></span><br></pre></td></tr></table></figure>
+
+<p>接下来，同样给是已经创建KVM虚拟机配置IP，不同的是，VMs网卡配置NIC都以 Bridge 方式绑定到对应的 virt-port[1-4]</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">Linx</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://example.com/2021/04/21/OVS-Setup/">http://example.com/2021/04/21/OVS-Setup/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-full"><a href="/2021/04/25/Metronome/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">Metronome:adaptive and precise intermittent packet retrieval in DPDK</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="/null" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Linx</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">3</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/codelinshan"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E6%A1%A3"><span class="toc-number">1.</span> <span class="toc-text">参考文档</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81-OVS%E5%AE%89%E8%A3%85"><span class="toc-number">2.</span> <span class="toc-text">一、 OVS安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-Obtaining-Open-vSwitch-Sources"><span class="toc-number">2.1.</span> <span class="toc-text">1.1 Obtaining Open vSwitch Sources</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-Bootstrapping-%E9%9D%9E-git-%E8%8E%B7%E5%8F%96%E4%B8%8B%E6%9D%A5%E6%BA%90%E7%A0%81%EF%BC%8C%E7%95%A5%E8%BF%87"><span class="toc-number">2.2.</span> <span class="toc-text">1.2 Bootstrapping (非 git 获取下来源码，略过)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-Configuring"><span class="toc-number">2.3.</span> <span class="toc-text">1.3 Configuring</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-Building"><span class="toc-number">2.4.</span> <span class="toc-text">1.4 Building</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-5-ovs%E5%B7%A5%E5%85%B7%E8%84%9A%E6%9C%AC%E5%AF%BC%E5%85%A5"><span class="toc-number">2.5.</span> <span class="toc-text">1.5 ovs工具脚本导入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-6-ovs%E5%90%AF%E5%8A%A8"><span class="toc-number">2.6.</span> <span class="toc-text">1.6 ovs启动</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81-KVM-%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85"><span class="toc-number">3.</span> <span class="toc-text">二、 KVM 虚拟机安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E5%89%8D%E6%8F%90%E6%9D%A1%E4%BB%B6"><span class="toc-number">3.1.</span> <span class="toc-text">2.1 前提条件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E5%AE%89%E8%A3%85-KVM"><span class="toc-number">3.2.</span> <span class="toc-text">2.2 安装 KVM</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81-%E6%8B%93%E6%89%91%E6%90%AD%E5%BB%BA"><span class="toc-number">4.</span> <span class="toc-text">三、 拓扑搭建</span></a></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Linx</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">Local search</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search for Posts" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"></div><canvas class="fireworks" mobile="false"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/fireworks.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
