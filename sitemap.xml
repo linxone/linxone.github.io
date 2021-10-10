@@ -2,16 +2,30 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://example.com/2021/10/11/%E8%87%AA%E5%AE%9A%E4%B9%89OVS%E5%86%8D%E7%BC%96%E8%AF%91/</loc>
+    
+    <lastmod>2021-10-10</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://example.com/2021/10/11/KVM-Setup/</loc>
+    
+    <lastmod>2021-10-10</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://example.com/2021/04/21/OVS-Setup/</loc>
     
-    <lastmod>2021-08-17</lastmod>
+    <lastmod>2021-10-10</lastmod>
     
   </url>
   
   <url>
     <loc>http://example.com/2021/08/09/DPDK-Setup/</loc>
     
-    <lastmod>2021-08-17</lastmod>
+    <lastmod>2021-10-10</lastmod>
     
   </url>
   
@@ -25,7 +39,7 @@
 
   <url>
     <loc>http://example.com/</loc>
-    <lastmod>2021-09-03</lastmod>
+    <lastmod>2021-10-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
