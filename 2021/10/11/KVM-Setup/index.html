@@ -7,7 +7,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
 <meta property="article:published_time" content="2021-10-10T16:20:39.000Z">
-<meta property="article:modified_time" content="2021-10-10T16:34:10.523Z">
+<meta property="article:modified_time" content="2021-10-13T15:09:47.951Z">
 <meta property="article:author" content="Linx">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2021/10/11/KVM-Setup/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
@@ -56,7 +56,7 @@
   isHome: false,
   isHighlightShrink: false,
   isToc: true,
-  postUpdate: '2021-10-11 00:34:10'
+  postUpdate: '2021-10-13 23:09:47'
 }</script><noscript><style type="text/css">
   #nav {
     opacity: 1
@@ -144,7 +144,7 @@
       document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
     }
     })(window)</script><meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="有诗三百首" type="application/atom+xml">
-</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="/null" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">5</div></a></div></div></div><hr/></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">有诗三百首</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> Search</span></a></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">KVM_QEMU-Setup</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-10-10T16:20:39.000Z" title="Created 2021-10-11 00:20:39">2021-10-11</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2021-10-10T16:34:10.523Z" title="Updated 2021-10-11 00:34:10">2021-10-11</time></span></div><div class="meta-secondline"></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="一、-KVM-虚拟机安装"><a href="#一、-KVM-虚拟机安装" class="headerlink" title="一、 KVM 虚拟机安装"></a>一、 KVM 虚拟机安装</h2><h3 id="1-1-前提条件"><a href="#1-1-前提条件" class="headerlink" title="1.1 前提条件"></a>1.1 前提条件</h3><p>在安装之前，确保主机支持 KVM 虚拟化，并且系统必须拥有支持VT-x(vmx) 的 Intel 处理器或者支持 AMD-V(svm) 技术的 AMD 处理器。输入下面的grep命令来看看你的吹气是否支持硬件虚拟化：</p>
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="/null" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">5</div></a></div></div></div><hr/></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">有诗三百首</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> Search</span></a></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">KVM_QEMU-Setup</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-10-10T16:20:39.000Z" title="Created 2021-10-11 00:20:39">2021-10-11</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2021-10-13T15:09:47.951Z" title="Updated 2021-10-13 23:09:47">2021-10-13</time></span></div><div class="meta-secondline"></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="一、-KVM-虚拟机安装"><a href="#一、-KVM-虚拟机安装" class="headerlink" title="一、 KVM 虚拟机安装"></a>一、 KVM 虚拟机安装</h2><h3 id="1-1-前提条件"><a href="#1-1-前提条件" class="headerlink" title="1.1 前提条件"></a>1.1 前提条件</h3><p>在安装之前，确保主机支持 KVM 虚拟化，并且系统必须拥有支持VT-x(vmx) 的 Intel 处理器或者支持 AMD-V(svm) 技术的 AMD 处理器。输入下面的grep命令来看看你的吹气是否支持硬件虚拟化：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep -Eoc &#x27;(vmx|svm)&#x27; /proc/cpuinfo</span><br></pre></td></tr></table></figure>
 
 <p>如果 CPU 支持硬件虚拟化，这个命令将会打印出大于0的数字，这代表 CPU 核心数目。否则，如果输出为0，它意味着这个 CPU 不支持硬件虚拟化。</p>
@@ -178,13 +178,12 @@
 <li>vp：对于OvS看来就是交换机br0上的的一个端口/接口，而对于OvS宿主主机和宿主主机所创建的vm而言，vp都是一个虚拟网卡；</li>
 </ul>
 <p>这里举例一个拓扑图配置方案，OvS配置命令如下，以HOST1为例(HOST2类似操作):</p>
-<img src="/2021/10/11/KVM-Setup/single-Eth.png" alt="single-Eth" style="zoom:33%;">
-
+<img src="/2021/10/11/KVM-Setup/single-Eth.png" alt="single-Eth" style="zoom:50%;">
 
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo ovs-vsctl add-br br0     // 创建一个叫br0的网桥</span><br><span class="line">sudo ovs-vsctl add-port br0 phy-eth    // 将宿主主机物理网卡 phy-eth 绑定到网桥 br0 上，并且要与物理网卡同名，注意的是OvS不能绑定宿主主机虚拟网</span><br></pre></td></tr></table></figure>
 
 <p>接下来，给已经创建KVM虚拟机配置IP，并确定所有虚拟机VMs网卡配置NIC都以 Bridge 方式绑定到 br0。这里是将 VM1 VM2 VM3 VM4划分在同一个子网内。IPv4地址分别是 10.0.0.11 10.0.0.12 10.0.0.13 10.0.0.14，Netmask都是 255.255.255.0 。<br>HOST2同上类似操作；</p>
-<img src="/2021/10/11/KVM-Setup/multi-Eths.png" alt="multi-Eths" style="zoom:33%;">
+<img src="/2021/10/11/KVM-Setup/multi-Eths.png" alt="multi-Eths" style="zoom:50%;">
 
 <p>这里也可以为每个 VM 在 OvS 上配置一个单独端口</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo ovs-vsctl add-port br0 virt-port1 -- set Interface virt-port1 type=internal// HOST1上创建一个叫 virt-port1 的虚拟端口</span><br><span class="line">sudo ovs-vsctl add-port br0 virt-port2 -- set Interface virt-port2 type=internal// HOST1上创建一个叫 virt-port2 的虚拟端口</span><br><span class="line">sudo ovs-vsctl add-port br0 virt-port3 -- set Interface virt-port3 type=internal// HOST2上创建一个叫 virt-port3 的虚拟端口</span><br><span class="line">sudo ovs-vsctl add-port br0 virt-port4 -- set Interface virt-port4 type=internal// HOST2上创建一个叫 virt-port4 的虚拟端口</span><br></pre></td></tr></table></figure>
