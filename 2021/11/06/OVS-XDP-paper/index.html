@@ -1,0 +1,180 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Revisiting the Open vSwitch Dataplane Ten Years Later 论文阅读 | 有诗三百首</title><meta name="keywords" content="paper OVS"><meta name="author" content="Linx"><meta name="copyright" content="Linx"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="本篇 paper 收录于 [Sigcomm2021](ACM SIGCOMM 2021 - ACM SIGCOMM 2021)  AbstractOVS 是一个广泛应用的虚拟化产品。在最初设计OVS时，只有内核层可以高速处理数据包，由于 OVS 要实现功能太复杂了，不能完全在内核内实现。所以最初的OVS架构将其代码分为用户层和内核层模块，前者负责设置策略，后者提供了以高性能实现策略所需的最小机制，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Revisiting the Open vSwitch Dataplane Ten Years Later 论文阅读">
+<meta property="og:url" content="http://example.com/2021/11/06/OVS-XDP-paper/index.html">
+<meta property="og:site_name" content="有诗三百首">
+<meta property="og:description" content="本篇 paper 收录于 [Sigcomm2021](ACM SIGCOMM 2021 - ACM SIGCOMM 2021)  AbstractOVS 是一个广泛应用的虚拟化产品。在最初设计OVS时，只有内核层可以高速处理数据包，由于 OVS 要实现功能太复杂了，不能完全在内核内实现。所以最初的OVS架构将其代码分为用户层和内核层模块，前者负责设置策略，后者提供了以高性能实现策略所需的最小机制，">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2021-11-06T08:56:09.000Z">
+<meta property="article:modified_time" content="2021-11-06T09:37:19.229Z">
+<meta property="article:author" content="Linx">
+<meta property="article:tag" content="paper OVS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2021/11/06/OVS-XDP-paper/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"We didn't find any results for the search: ${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-11-06 17:37:19'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const fontSizeVal = saveToLocal.get('global-font-size')
+    if (fontSizeVal !== undefined) {
+      document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+    }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="有诗三百首" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="/null" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">6</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">5</div></a></div></div></div><hr/></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">有诗三百首</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> Search</span></a></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Revisiting the Open vSwitch Dataplane Ten Years Later 论文阅读</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-11-06T08:56:09.000Z" title="Created 2021-11-06 16:56:09">2021-11-06</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2021-11-06T09:37:19.229Z" title="Updated 2021-11-06 17:37:19">2021-11-06</time></span></div><div class="meta-secondline"></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>本篇 paper 收录于 [Sigcomm2021](<a target="_blank" rel="noopener" href="https://conferences.sigcomm.org/sigcomm/2021/program.html">ACM SIGCOMM 2021 - ACM SIGCOMM 2021</a>)</p>
+<hr>
+<h4 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h4><p>OVS 是一个广泛应用的虚拟化产品。在最初设计OVS时，只有内核层可以高速处理数据包，由于 OVS 要实现功能太复杂了，不能完全在内核内实现。所以最初的OVS架构将其代码分为用户层和内核层模块，前者负责设置策略，后者提供了以高性能实现策略所需的最小机制，也就是说对于 OVS 内核层和用户层是紧密耦合的。因此，维护的问题一致持续到现在。而且，内核层的包处理速度也不如现在 DPDK 等架构。所以本文提出一种基于 AF_XDP Linux socket 来解决这些问题。</p>
+<p>Motivation</p>
+<p>传统 OVS 整个架构是由<strong>内核模块</strong>和<strong>用户空间</strong>组件紧密耦合的，这种设计对性能是必要的，但它造成的可维护性问题至今仍然存在。如今，想设计一个既能保证高性能包处理能力，也能解决可维护性的问题。</p>
+<p>在这个过程中，考虑到 OVS 已经很流行了，并且很多厂商还有针对 OVS 自己开发组件软件。也就是说直接弃用 OVS 改用其他替代品，这些组件软件就都无用了，所以不考虑此方案。这也就是说本文继续对 OVS 优化，改进它的架构，不仅保证性能和解决可维护性，同时也要很好兼容上述说的组件软件。</p>
+<ol>
+<li>紧密耦合带来的问题</li>
+</ol>
+<ul>
+<li>Maintainability: OVS中的功能实现受限于 Linux 开发原则，需要 trace Linux Kernel 开发</li>
+<li>Operability: OVS 更新和 bug 修复需要更新内核甚至重开机</li>
+<li>Performance: 传统内核处理数据包很慢</li>
+</ul>
+<ol start="2">
+<li>Paper Contributions</li>
+</ol>
+<ul>
+<li>采用 AF_XDP 作为软件交换机的 I/O 数据通路</li>
+<li>OVS 用 AF_XDP 作 用户空间驱动的应用和性能优化</li>
+<li>OVS+AF_XDP 与现有网络虚拟化方案的整合 等</li>
+</ul>
+<h4 id="Architecture-Design"><a href="#Architecture-Design" class="headerlink" title="Architecture Design"></a>Architecture Design</h4><p><strong>根源问题</strong>就是因为传统的 OVS 整个架构是用户层和内核层紧密耦合。</p>
+<p>2.1 OVS with eBPF  </p>
+<p>eBPF 是一项革命性技术，它能在内核中运行沙箱程序（sandbox programs）， 而无需修改内核源码或者加载内核模块。将 Linux 内核变成可编程之后，就能基于现有的（而非增加新的）抽象层来打造更加智能、 功能更加丰富的基础设施软件，而不会增加系统的复杂度，也不会牺牲执行效率和安全性。</p>
+<p>eBPF 的两大特色 —— 可编程和高性能。使它能满足所有的网络包处理需求。 可编程意味着无需离开内核中的包处理上下文，就能添加额外的协议解析器或任何转发逻辑， 以满足不断变化的需求。高性能的 JIT 编译器使 eBPF 程序能达到几乎与原生编译的内核态代码一样的执行性能。</p>
+<p>缺点就是性能比传统的ovs性能差。</p>
+<p>2.2 OVS with DPDK</p>
+<p>简而言之，将整个架构全部上移到 userspace，但缺点很明显就是 dpdk有一套属于自己的 device driver，所以原来 ifconfig ip router 等这套基于传统 Linux device driver 开发的网络工具都不能用了。这就要求维护人员需要额外掌握一套dpdk的网络管理工具。</p>
+<p>2.3 OVS with AF_XDP</p>
+<p>XDP 是一种内核态、高性能、可编程 BPF 包处理架构。这个框架在软件中最早可以处理包的位置（即网卡驱动收到包的 时刻）运行 BPF 程序。</p>
+<p>AF_XDP是为高性能数据包处理而优化的地址族，AF_XDP 套接字使 XDP 程序可以将帧重定向到用户空间应用程序中的内存缓冲区。换而言之，XDP 通过 AF_XDP socket 实现 kernel 和 userspace 之间高速的数据通路。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">Linx</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://example.com/2021/11/06/OVS-XDP-paper/">http://example.com/2021/11/06/OVS-XDP-paper/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/paper-OVS/">paper OVS</a></div><div class="post_share"></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2021/10/11/%E8%87%AA%E5%AE%9A%E4%B9%89OVS%E5%86%8D%E7%BC%96%E8%AF%91/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">自定义OVS再编译</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="/null" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Linx</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">6</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">5</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/codelinshan"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#Abstract"><span class="toc-number">1.</span> <span class="toc-text">Abstract</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Architecture-Design"><span class="toc-number">2.</span> <span class="toc-text">Architecture Design</span></a></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Linx</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="Increase font size"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="Decrease font size"><i class="fas fa-minus"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">Local search</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search for Posts" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"></div></div></body></html>
